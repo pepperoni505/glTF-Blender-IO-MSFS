@@ -166,6 +166,10 @@ def register_panel():
         except Exception:
             pass
 
+    for module in modules():
+        if hasattr(module, "register_panel"):
+            module.register_panel()
+
     # If the glTF exporter is disabled, we need to unregister the extension panel
     # Just return a function to the exporter so it can unregister the panel
     return unregister_panel
@@ -189,6 +193,10 @@ def unregister_panel():
             bpy.utils.unregister_class(panel)
         except Exception:
             pass
+
+    for module in modules():
+        if hasattr(module, "unregister_panel"):
+            module.unregister_panel()
 
 from .io.msfs_import import Import
 class glTF2ImportUserExtension(Import):
