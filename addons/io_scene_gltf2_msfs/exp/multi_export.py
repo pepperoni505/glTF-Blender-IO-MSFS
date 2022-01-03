@@ -13,55 +13,67 @@ import io_scene_gltf2
 ###
 
 class MultiExportLOD(bpy.types.PropertyGroup):
-    object_name: bpy.props.StringProperty(name="", default="")
+    object: bpy.props.PointerProperty(name="", type=bpy.types.Object)
     checked: bpy.props.BoolProperty(name="", default=False)
 
     lod_value: bpy.props.IntProperty(name="", default=0, min=0)  # TODO: add max
     flatten_on_export: bpy.props.BoolProperty(name="", default=False)
     keep_instances: bpy.props.BoolProperty(name="", default=False)
-    export_path: bpy.props.StringProperty(name="", default="")  # TODO: figure this out
+    file_name: bpy.props.StringProperty(name="", default="")  # TODO: figure this out
 
 
 class MultiExporterPropertyGroup(bpy.types.PropertyGroup):
-    collection_name: bpy.props.StringProperty(name="", default="")
+    collection: bpy.props.PointerProperty(name="", type=bpy.types.Collection)
     expanded: bpy.props.BoolProperty(name="", default=True)
     lods: bpy.props.CollectionProperty(type=MultiExportLOD)
+    folder_name: bpy.props.StringProperty(name="", default="")  # TODO: figure this out
+
+class MSFSMultiExporterProperties():
+    bpy.types.Scene.msfs_multi_exporter_current_tab = bpy.props.EnumProperty(items=
+            (("OBJECTS", "Objects", ""),
+            ("PRESETS", " Presets", "")),
+    )
 
 
-class MSFS_OT_EditEnabledLODs(bpy.types.Operator):
+class MSFS_OT_edit_enabled_lods(bpy.types.Operator):
     bl_idname = "msfs.edit_enabled_lods"
     bl_label = "Edit Enabled LODs"
 
     def execute(self, context):
         return {"FINISHED"}
 
-    def invoke(self, context, event):  # TODO: fix clearing settings on open. callback: glTF2_pre_export_callback
+    def invoke(self, context, event):  # TODO: callback: glTF2_pre_export_callback
         property_collection = context.scene.msfs_multi_exporter_collection
-        # property_collection.clear()
-        for collection in bpy.data.collections:  # TODO: remove collections and lods that are no longer used
-            collection_exists = False
-            item = None
-            for prop in property_collection:
-                if prop.collection_name == collection.name:
-                    item = prop
-                    collection_exists = True
 
-            if not collection_exists:
-                item = property_collection.add()
-                item.collection_name = collection.name
-                item.checked = False
+        # Remove deleted collections and objects
+        for i, property_group in enumerate(property_collection):
+            if property_group.collection:
+                for j, lod in enumerate(property_group.lods):
+                    if not lod.object.name in context.scene.objects:
+                        property_collection[i].lods.remove(j)
+            else:
+                property_collection.remove(i)
+            
 
+        # Add collection if not already in property group
+        for collection in bpy.data.collections:
+            if not collection in [property_group.collection for property_group in property_collection]:
+                collection_prop_group = property_collection.add()
+                collection_prop_group.collection = collection
+                collection_prop_group.folder_name = collection.name
+            else:
+                for property_group in property_collection:
+                    if property_group.collection == collection:
+                        collection_prop_group = property_group
+                        break
+            
             for obj in collection.all_objects:
+                # If the object starts with x(NUM)_ or ends with LOD_(NUM), add to lods
                 if re.match("x\d_", obj.name.lower()) or re.match(".+_lod[0-9]+", obj.name.lower()):
-                    obj_exists = False
-                    for lod in item.lods:
-                        if object.name == lod.object_name:
-                            obj_exists = True
-
-                    if not obj_exists:
-                        obj_item = item.lods.add()
-                        obj_item.object_name = obj.name
-                        obj_item.checked = False
+                    if not obj in [lod.object for lod in collection_prop_group.lods]:
+                        obj_item = collection_prop_group.lods.add()
+                        obj_item.object = obj
+                        obj_item.file_name = obj.name
 
         return context.window_manager.invoke_props_dialog(self)
 
@@ -80,28 +92,27 @@ class MSFS_OT_EditEnabledLODs(bpy.types.Operator):
                 row = layout.row()
                 if len(prop.lods) > 0:
                     box = row.box()
-                    box.prop(prop, "expanded", text=prop.collection_name,
+                    box.prop(prop, "expanded", text=prop.collection.name,
                              icon="DOWNARROW_HLT" if prop.expanded else "RIGHTARROW", icon_only=True, emboss=False)
                     if prop.expanded:
+                        box.prop(prop, "folder_name", text="Folder")
+
                         col = box.column()
                         for lod in prop.lods:
                             row = col.row()
-                            row.prop(lod, "checked", text=lod.object_name)
+                            row.prop(lod, "checked", text=lod.object.name)
                             subrow = row.column()
                             subrow.prop(lod, "lod_value", text="LOD Value")
                             subrow.prop(lod, "flatten_on_export", text="Flatten on Export")
                             subrow.prop(lod, "keep_instances", text="Keep Instances")
-                            subrow.prop(lod, "export_path", text="Path")
+                            subrow.prop(lod, "file_name", text="Name")
 
 
 class MSFS_OT_ChangeTab(bpy.types.Operator):
     bl_idname = "msfs.multi_export_change_tab"
     bl_label = "Change tab"
 
-    current_tab: bpy.props.EnumProperty(items=
-                                        (("OBJECTS", "Objects", ""),
-                                         ("PRESETS", " Presets", "")),
-                                        )
+    current_tab: bpy.types.Scene.msfs_multi_exporter_current_tab
 
     def execute(self, context):
         context.scene.msfs_multi_exporter_current_tab = self.current_tab
@@ -126,27 +137,7 @@ class MSFS_PT_MultiExporterObjectsView(bpy.types.Panel):
         layout.use_property_split = True
         layout.use_property_decorate = False  # No animation.
 
-        # property_collection = bpy.context.scene.msfs_multi_exporter_collection
-        # layout.label(text="Enabled LODs")
-        # enabled_lods = 0
-        # for prop in property_collection:
-        #     for lod in prop.lods:
-        #         if lod.checked:
-        #             enabled_lods += 1
-
-        # if enabled_lods == 0:
-        #     box = layout.box()
-        #     box.label(text="None")
-        # else:
-        #     for prop in property_collection:
-        #         box = layout.box()
-        #         box.prop(prop, "expanded", text=prop.collection_name, icon="DOWNARROW_HLT" if prop.expanded else "RIGHTARROW", icon_only=True, emboss=False)
-        #         if prop.expanded:
-        #             row = box.row()
-        #             for lod in prop.lods:
-        #                 row.label(text=lod.object_name)
-
-        layout.operator(MSFS_OT_EditEnabledLODs.bl_idname, text="Edit Enabled LODs")
+        layout.operator(MSFS_OT_edit_enabled_lods.bl_idname, text="Edit Enabled LODs")
 
 
 class MSFS_PT_MultiExporter(bpy.types.Panel):
@@ -162,10 +153,6 @@ class MSFS_PT_MultiExporter(bpy.types.Panel):
         operator = sfile.active_operator
         return operator.bl_idname == "EXPORT_SCENE_OT_gltf" and context.scene.msfs_ExtAsoboProperties.enabled
 
-    # def draw_header(self, context):
-    #     layout = self.layout
-    #     layout.label(text="test", icon='TOOL_SETTINGS')
-
     def draw(self, context):
         layout = self.layout
         layout.use_property_split = True
@@ -179,14 +166,8 @@ class MSFS_PT_MultiExporter(bpy.types.Panel):
         row.operator(MSFS_OT_ChangeTab.bl_idname, text="Presets",
                      depress=(current_tab == "PRESETS")).current_tab = "PRESETS"
 
-
 def register():
-    bpy.types.Scene.msfs_multi_exporter_collection = bpy.props.CollectionProperty(type=MultiExporterPropertyGroup)
-    bpy.types.Scene.msfs_multi_exporter_current_tab = bpy.props.EnumProperty(items=
-            (("OBJECTS", "Objects", ""),
-            ("PRESETS", " Presets", "")),
-    )  # TODO: move to separate class and remove duplicated current_tab code
-
+    bpy.types.Scene.msfs_multi_exporter_collection = bpy.props.CollectionProperty(type=MultiExporterPropertyGroup) # for some reason this has to be here. TODO: move this to the property class
 
 def register_panel():
     # Register the panel on demand, we need to be sure to only register it once
