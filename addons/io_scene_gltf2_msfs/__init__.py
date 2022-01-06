@@ -1,4 +1,4 @@
-# Copyright 2021 The glTF-Blender-IO-MSFS authors.
+# Copyright 2021-2022 The glTF-Blender-IO-MSFS authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -190,12 +190,12 @@ def unregister_panel():
         except Exception:
             pass
 
-from .imp.msfs_import import Import
+from .io.msfs_import import Import
 class glTF2ImportUserExtension(Import):
     def __init__(self):
         self.properties = bpy.context.scene.msfs_importer_properties
 
-from .exp.msfs_export import Export
+from .io.msfs_export import Export
 class glTF2ExportUserExtension(Export):
     def __init__(self):
         # We need to wait until we create the gltf2UserExtension to import the gltf2 modules

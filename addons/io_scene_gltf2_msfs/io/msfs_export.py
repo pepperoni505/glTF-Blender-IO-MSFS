@@ -1,4 +1,4 @@
-# Copyright 2021 The glTF-Blender-IO-MSFS authors.
+# Copyright 2021-2022 The glTF-Blender-IO-MSFS authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
 
 import bpy
 import math
+
+from msfs_light import MSFSLight
 
 class Export:
 
@@ -33,25 +35,7 @@ class Export:
                 gltf2_object.extensions = {}
 
             if blender_object.type == 'LIGHT':
-                angle = 360.0
-                if blender_object.data.type == 'SPOT':
-                    angle = (180.0 / math.pi) * blender_object.data.spot_size
-
-                gltf2_object.extensions["ASOBO_macro_light"] = self.Extension(
-                    name = "ASOBO_macro_light",
-                    extension={
-                        "color": [blender_object.data.color[0],blender_object.data.color[1],blender_object.data.color[2]],
-                        "intensity": blender_object.data.energy,
-                        "cone_angle": angle,
-                        "has_simmetry": blender_object.msfs_light_has_symmetry,
-                        "flash_frequency": blender_object.msfs_light_flash_frequency,
-                        "flash_duration": blender_object.msfs_light_flash_duration,
-                        "flash_phase": blender_object.msfs_light_flash_phase,
-                        "rotation_speed": blender_object.msfs_light_rotation_speed,
-                        "day_night_cycle": blender_object.msfs_light_day_night_cycle,
-                    },
-                    required = False
-                )
+                MSFSLight.export(gltf2_object, blender_object, export_settings)
                 
     def gather_mesh_hook(self, gltf2_mesh, blender_mesh, blender_object, vertex_groups, modifiers, skip_filter, material_names, export_settings):
         # Set gizmo objects extension

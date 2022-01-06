@@ -1,4 +1,4 @@
-# Copyright 2021 The glTF-Blender-IO-MSFS authors.
+# Copyright 2021-2022 The glTF-Blender-IO-MSFS authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import bpy
+from msfs_light import MSFSLight
 
 class Import:
 
@@ -20,6 +21,10 @@ class Import:
         pass
 
 
+    def gather_import_light_after_hook(self, gltf_node, blender_node, blender_light, import_settings):
+        MSFSLight.create(gltf_node, blender_node, blender_light, import_settings)
+
+    
     # Create gizmos
 
     # Create materials
