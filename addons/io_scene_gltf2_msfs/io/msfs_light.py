@@ -13,53 +13,47 @@
 # limitations under the License.
 
 import math
-from enum import Enum
+from typing import List
 
 from io_scene_gltf2.io.com.gltf2_io_extensions import Extension
 
-class MSFSLightProperties(Enum):
-    color = "color",
-    intensity = "intensity",
-    cone_angle = "cone_angle",
-    has_symmetry = "has_symmetry",
-    flash_frequency = "flash_frequency",
-    flash_duration = "flash_duration",
-    flash_phase = "flash_phase",
-    rotation_speed = "rotation_speed",
-    day_night_cycle = "day_night_cycle",
 
-class MSFSLightExtension():
+class MSFSLightExtension:
     extension_name = "ASOBO_macro_light"
 
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+    def __init__(self, color: List[float] = None, intensity: float = None, cone_angle: float = None, has_symmetry: bool = None,
+                 flash_frequency: float = None, flash_duration: float = None, flash_phase: float = None, rotation_speed: float = None,
+                 day_night_cycle: bool = None):
+        self.color = color
+        self.intensity = intensity
+        self.cone_angle = cone_angle
+        self.has_symmetry = has_symmetry
+        self.flash_frequency = flash_frequency
+        self.flash_duration = flash_duration
+        self.flash_phase = flash_phase
+        self.rotation_speed = rotation_speed
+        self.day_night_cycle = day_night_cycle
 
     @staticmethod
     def from_dict(obj):
         assert isinstance(obj, dict)
         extension = obj.get(MSFSLightExtension.extension_name)
         if extension:
-            kwargs = {}
-            for i in MSFSLightProperties:
-                kwargs[i.name] = extension.get(i.value[0])
-            return MSFSLightExtension(**kwargs)
+            return MSFSLightExtension(**extension)
 
     def to_extension(self, required=False):
-        result = {}
-        for i in MSFSLightProperties:
-            result[i[1]] = self[i.name]
-
-        extension = Extension(name=MSFSLightExtension.extension_name, extension=result, required=required)
+        extension = Extension(name=MSFSLightExtension.extension_name, extension=self.__dict__, required=required)
         return extension
 
 
-class MSFSLight():
+class MSFSLight:
     def __new__(cls, *args, **kwargs):
-            raise RuntimeError("%s should not be instantiated" % cls)
+        raise RuntimeError("%s should not be instantiated" % cls)
 
     @staticmethod
     def create(gltf_node, blender_node, blender_light, import_settings):
-        parent_light = import_settings.data.nodes[gltf_node.parent] # The glTF exporter creates the actual light as a child of the node that has the Asobo extension
+        parent_light = import_settings.data.nodes[
+            gltf_node.parent]  # The glTF exporter creates the actual light as a child of the node that has the Asobo extension
         if parent_light.extensions:
             extension = MSFSLightExtension.from_dict(parent_light.extensions)
             if extension:
@@ -83,16 +77,16 @@ class MSFSLight():
         if blender_object.data.type == 'SPOT':
             angle = (180.0 / math.pi) * blender_object.data.spot_size
 
-        properties = {}
-        properties[MSFSLightProperties.color.name] = blender_object.color
-        properties[MSFSLightProperties.intensity.name] = blender_object.energy
-        properties[MSFSLightProperties.cone_angle.name] = angle
-        properties[MSFSLightProperties.has_symmetry.name] = blender_object.msfs_light_has_symmetry
-        properties[MSFSLightProperties.flash_frequency.name] = blender_object.msfs_light_flash_frequency
-        properties[MSFSLightProperties.flash_duration.name] = blender_object.msfs_light_flash_duration
-        properties[MSFSLightProperties.flash_phase.name] = blender_object.msfs_light_flash_phase
-        properties[MSFSLightProperties.rotation_speed.name] = blender_object.msfs_light_rotation_speed
-        properties[MSFSLightProperties.day_night_cycle.name] = blender_object.msfs_light_day_night_cycle
+        extension = MSFSLightExtension()
 
-        extension = MSFSLightExtension(**properties)
+        extension.color = list(blender_object.data.color)
+        extension.intensity = blender_object.data.energy
+        extension.cone_angle = angle
+        extension.has_symmetry = blender_object.msfs_light_has_symmetry
+        extension.flash_frequency = blender_object.msfs_light_flash_frequency
+        extension.flash_duration = blender_object.msfs_light_flash_duration
+        extension.flash_phase = blender_object.msfs_light_flash_phase
+        extension.rotation_speed = blender_object.msfs_light_rotation_speed
+        extension.day_night_cycle = blender_object.msfs_light_day_night_cycle
+
         gltf2_object.extensions[MSFSLightExtension.extension_name] = extension.to_extension()
