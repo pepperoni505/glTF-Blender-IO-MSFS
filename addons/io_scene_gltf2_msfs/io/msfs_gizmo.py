@@ -14,75 +14,55 @@
 
 import bpy
 import math
-from typing import List
 
 from io_scene_gltf2.io.com.gltf2_io_extensions import Extension
-
-
-class GizmoObject:
-    def __init__(self, translation: List[float] = None, type: str = None, params: dict = None, extensions: dict = None):
-        self.translation = translation
-        self.type = type
-        self.params = params
-        self.extensions = extensions
-
-
-class MSFSGizmoExtension:
-    extension_name = "ASOBO_gizmo_object"
-
-    def __init__(self, gizmo_objects: List[GizmoObject] = None):
-        self.gizmo_objects = gizmo_objects
-
-    @staticmethod
-    def from_dict(obj):
-        assert isinstance(obj, dict)
-        extension = obj.get(MSFSGizmoExtension.extension_name)
-        if extension:
-            gizmo_objects = []
-            for gizmo_object in extension.get("gizmo_objects"):
-                gizmo_objects.append(GizmoObject(**gizmo_object))
-            return MSFSGizmoExtension(gizmo_objects=gizmo_objects)
-
-    def to_extension(self, required=False):
-        extension = Extension(name=MSFSGizmoExtension.extension_name, extension=self.__dict__, required=required)
-        return extension
 
 
 class MSFSGizmo():
     bl_options = {"UNDO"}
 
+    extension_name = "ASOBO_gizmo_object"
+
     def __new__(cls, *args, **kwargs):
             raise RuntimeError("%s should not be instantiated" % cls)
 
     @staticmethod
-    def create(gltf_node, blender_object, import_settings): # TODO: clean this up, fix gizmo undo and drawing two gizmos on one empty
+    def create(gltf_node, blender_object, import_settings):
         gltf_mesh = import_settings.data.meshes[gltf_node.mesh]
         if gltf_mesh.extensions:
-            extension = MSFSGizmoExtension.from_dict(gltf_mesh.extensions)
+            extension = gltf_mesh.extensions.get(MSFSGizmo.extension_name)
             if extension:
-                for gizmo_object in extension.gizmo_objects:
+                for gizmo_object in extension.get("gizmo_objects"):
                     bpy.ops.object.empty_add()
                     gizmo = bpy.context.object
-                    if gizmo_object.type == "sphere":
+
+                    # Set gizmo location
+                    gizmo.location = gizmo_object.get("translation")
+
+                    # Set gizmo type and rename gizmo
+                    type = gizmo_object.get("type")
+                    gizmo.msfs_gizmo_type = type
+
+                    if type == "sphere":
                         gizmo.name = "Sphere Collision"
-                    elif gizmo_object.type == "box":
+                    elif type == "box":
                         gizmo.name = "Box Collision"
-                    elif gizmo_object.type == "cylinder":
+                    elif type == "cylinder":
                         gizmo.name = "Cylinder Collision"
 
-                    gizmo.location = gizmo_object.translation
-                    gizmo.msfs_gizmo_type = gizmo_object.type
+                    # Get gizmo scale
+                    params = gizmo_object.get("params", {})
+                    if type == "sphere":
+                        gizmo.scale[0] = params.get("radius")
+                        gizmo.scale[1] = params.get("radius")
+                        gizmo.scale[2] = params.get("radius")
+                    elif type == "cylinder":
+                        gizmo.scale[0] = params.get("radius")
+                        gizmo.scale[1] = params.get("radius")
+                        gizmo.scale[2] = params.get("height")
 
-                    if gizmo_object.type == "sphere":
-                        gizmo.scale[0] = gizmo_object.params.get("radius")
-                        gizmo.scale[1] = gizmo_object.params.get("radius")
-                        gizmo.scale[2] = gizmo_object.params.get("radius")
-                    elif gizmo_object.type == "cylinder":
-                        gizmo.scale[0] = gizmo_object.params.get("radius")
-                        gizmo.scale[1] = gizmo_object.params.get("radius")
-                        gizmo.scale[2] = gizmo_object.params.get("height")
-
-                    if "Road" in gizmo_object.extensions:
+                    # Set road collider
+                    if "Road" in gizmo_object.get("extensions", {}).get("ASOBO_tags", {}).get("tags"):
                         gizmo.msfs_collision_is_road_collider = True
 
                     gizmo.parent = blender_object
@@ -94,29 +74,28 @@ class MSFSGizmo():
                 
 
     @staticmethod
-    def export(gltf2_mesh, blender_mesh, export_settings):
-        extension = MSFSGizmoExtension()
+    def export(gltf2_mesh, blender_mesh):
+        gizmo_objects = []
         for object in bpy.context.scene.objects:
             if object.type == "MESH" and bpy.data.meshes[object.data.name] == blender_mesh:
                 for child in object.children:
                     if child.type == 'EMPTY' and child.msfs_gizmo_type != "NONE":
-                        gizmo_object = GizmoObject()
-
-                        gizmo_object.translation = list(child.location)
-                        gizmo_object.type = child.msfs_gizmo_type
+                        gizmo_object = {}
+                        gizmo_object["translation"] = list(child.location)
+                        gizmo_object["type"] = child.msfs_gizmo_type
 
                         if child.msfs_gizmo_type == "sphere":
-                            gizmo_object.params = {
+                            gizmo_object["params"] = {
                                 "radius": abs(child.scale.x * child.scale.y * child.scale.z)
                             }
                         elif child.msfs_gizmo_type == "box":
-                            gizmo_object.params = {
+                            gizmo_object["params"] = {
                                 "length": abs(child.scale.x),
                                 "width": abs(child.scale.y),
                                 "height": abs(child.scale.z)
                             }
                         elif child.msfs_gizmo_type == "cylinder":
-                            gizmo_object.params = {
+                            gizmo_object["params"] = {
                                 "radius": abs(child.scale.x * child.scale.y),
                                 "height": abs(child.scale.z)
                             }
@@ -125,7 +104,7 @@ class MSFSGizmo():
                         if child.msfs_collision_is_road_collider:
                             tags.append("Road")
 
-                        gizmo_object.extensions = {
+                        gizmo_object["extensions"] = {
                             "ASOBO_tags": Extension(
                                 name = "ASOBO_tags",
                                 extension = {
@@ -134,10 +113,13 @@ class MSFSGizmo():
                                 required = False
                             )
                         }
+                        gizmo_objects.append(gizmo_object)
 
-                        if extension.gizmo_objects is None:
-                            extension.gizmo_objects = []
-                        extension.gizmo_objects.append(gizmo_object.__dict__)
-
-        if extension.gizmo_objects:
-            gltf2_mesh.extensions[MSFSGizmoExtension.extension_name] = extension.to_extension()
+        if gizmo_objects:
+            gltf2_mesh.extensions[MSFSGizmo.extension_name] = Extension(
+                name = MSFSGizmo.extension_name,
+                extension = {
+                    "gizmo_objects": gizmo_objects
+                },
+                required = False
+            )

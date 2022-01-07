@@ -40,7 +40,7 @@ class Export:
                 
     def gather_mesh_hook(self, gltf2_mesh, blender_mesh, blender_object, vertex_groups, modifiers, skip_filter, material_names, export_settings):
         # Set gizmo objects extension
-        MSFSGizmo.export(gltf2_mesh, blender_mesh, export_settings)
+        MSFSGizmo.export(gltf2_mesh, blender_mesh)
 
     def gather_scene_hook(self, gltf2_scene, blender_scene, export_settings):
         # Recursive function to filter children that are gizmos
