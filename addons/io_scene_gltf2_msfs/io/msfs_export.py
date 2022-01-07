@@ -36,7 +36,7 @@ class Export:
                 gltf2_object.extensions = {}
 
             if blender_object.type == 'LIGHT':
-                MSFSLight.export(gltf2_object, blender_object, export_settings)
+                MSFSLight.export(gltf2_object, blender_object)
                 
     def gather_mesh_hook(self, gltf2_mesh, blender_mesh, blender_object, vertex_groups, modifiers, skip_filter, material_names, export_settings):
         # Set gizmo objects extension
@@ -169,7 +169,7 @@ class Export:
                         node = nodes.get("albedo_detail_mix")
                         if node != None:
                             inputs = (node.inputs["Color2"],)
-                        albedo_detail_texture = gather_texture_info(inputs, export_settings)
+                        albedo_detail_texture = gather_texture_info(inputs[0], inputs, export_settings)
                         if albedo_detail_texture != None:
                             detail_extension["detailColorTexture"] = albedo_detail_texture
                     if blender_material.msfs_detail_metallic_texture != None:
@@ -177,7 +177,7 @@ class Export:
                         node = nodes.get("metallic_detail_mix")
                         if node != None:
                             inputs = (node.inputs["Color2"],)
-                        metallic_detail_texture = gather_texture_info(inputs, export_settings)
+                        metallic_detail_texture = gather_texture_info(inputs[0], inputs, export_settings)
                         if metallic_detail_texture != None:
                             detail_extension["detailMetalRoughAOTexture"] = metallic_detail_texture
                     if blender_material.msfs_detail_normal_texture != None:
@@ -185,7 +185,7 @@ class Export:
                         node = nodes.get("normal_detail_mix")
                         if node != None:
                             inputs = (node.inputs["Color2"],)
-                        normal_detail_texture = gather_texture_info(inputs, export_settings)
+                        normal_detail_texture = gather_texture_info(inputs[0], inputs, export_settings)
                         if normal_detail_texture != None:
                             detail_extension["detailNormalTexture"] = normal_detail_texture
                     if len(detail_extension) > 0:
@@ -289,7 +289,7 @@ class Export:
                         node = nodes.get("albedo_detail_mix")
                         if node != None:
                             inputs = (node.inputs["Color2"],)
-                        behind_glass_texture = gather_texture_info(inputs, export_settings)
+                        behind_glass_texture = gather_texture_info(inputs[0], inputs, export_settings)
                         if behind_glass_texture != None:
                             parallax_extension["behindWindowMapTexture"] = behind_glass_texture
 
