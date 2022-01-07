@@ -47,7 +47,7 @@ class MSFSLight:
                 blender_node.msfs_light_day_night_cycle = extension.get("day_night_cycle")
 
     @staticmethod
-    def export(gltf2_object, blender_object, export_settings):
+    def export(gltf2_object, blender_object):
         angle = 360.0
         if blender_object.data.type == 'SPOT':
             angle = (180.0 / math.pi) * blender_object.data.spot_size
