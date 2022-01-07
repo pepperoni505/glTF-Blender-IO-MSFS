@@ -78,6 +78,7 @@ class AddGizmo(bpy.types.Operator):
 class MSFSCollisionGizmo(bpy.types.Gizmo):
     bl_idname = "VIEW3D_GT_msfs_collision_gizmo"
     bl_label = "MSFS Collision Gizmo"
+    bl_options = {"UNDO"}
 
     __slots__ = (
         "empty",
@@ -132,12 +133,14 @@ class MSFSCollisionGizmo(bpy.types.Gizmo):
     def get_matrix(self):
         # Re-calculate matrix without rotation
         if self.empty.msfs_gizmo_type == "sphere":
-            scale_matrix = Matrix.Scale(self.empty.scale[0] * self.empty.scale[1] * self.empty.scale[2], 4, (1, 0, 0)) @ Matrix.Scale(self.empty.scale[0] * self.empty.scale[1] * self.empty.scale[2], 4, (0, 1, 0)) @ Matrix.Scale(self.empty.scale[0] * self.empty.scale[1] * self.empty.scale[2], 4, (0, 0, 1))
+            scale = self.empty.scale[0] * self.empty.scale[1] * self.empty.scale[2]
+            scale_matrix = Matrix.Scale(scale, 4, (1, 0, 0)) @ Matrix.Scale(scale, 4, (0, 1, 0)) @ Matrix.Scale(scale, 4, (0, 0, 1))
         elif self.empty.msfs_gizmo_type == "cylinder":
-            scale_matrix = Matrix.Scale(self.empty.scale[0] * self.empty.scale[1], 4, (1, 0, 0)) @ Matrix.Scale(self.empty.scale[0] * self.empty.scale[1], 4, (0, 1, 0)) @ Matrix.Scale(self.empty.scale[2], 4, (0, 0, 1))
+            scale_xy = self.empty.scale[0] * self.empty.scale[1]
+            scale_matrix = Matrix.Scale(scale_xy, 4, (1, 0, 0)) @ Matrix.Scale(scale_xy, 4, (0, 1, 0)) @ Matrix.Scale(self.empty.scale[2], 4, (0, 0, 1))
         else:
             scale_matrix = Matrix.Scale(self.empty.scale[0], 4, (1, 0, 0)) @ Matrix.Scale(self.empty.scale[1], 4, (0, 1, 0)) @ Matrix.Scale(self.empty.scale[2], 4, (0, 0, 1))
-        matrix = self.empty.matrix_world @ scale_matrix
+        matrix = Matrix.Translation(self.empty.location) @ scale_matrix
         return matrix
 
     def draw(self, context):
