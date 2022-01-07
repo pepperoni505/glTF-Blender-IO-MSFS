@@ -15,23 +15,21 @@
 import bpy
 from .msfs_light import MSFSLight
 from .msfs_gizmo import MSFSGizmo
+from .msfs_material import MSFSMaterial
 
 class Import:
 
     def __init__(self):
         pass
 
-
+    # Create lights
     def gather_import_light_after_hook(self, gltf_node, blender_node, blender_light, import_settings):
         MSFSLight.create(gltf_node, blender_node, blender_light, import_settings)
 
-    
     # Create gizmos
     def gather_import_node_after_hook(self, vnode, gltf_node, blender_object, import_settings):
         MSFSGizmo.create(gltf_node, blender_object, import_settings)
 
     # Create materials
-
-    # Lights
-
-    # ???
+    def gather_import_material_after_hook(self, gltf_material, vertex_color, blender_mat, import_settings):
+        MSFSMaterial.create(gltf_material, blender_mat, import_settings)
