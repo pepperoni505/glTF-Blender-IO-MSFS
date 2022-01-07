@@ -21,790 +21,788 @@ from .func_material import *
 class MSFS_LI_material():
     # Use this function to update the shader node tree
     def switch_msfs_material(self,context):
-        mat = context.active_object.active_material
-        if mat.msfs_material_mode == 'msfs_standard':
-            CreateMSFSStandardShader(mat)
+        if self.msfs_material_mode == 'msfs_standard':
+            CreateMSFSStandardShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = True
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = True
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = True
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = True
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = True
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = True
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_standard material.")
 
-        elif mat.msfs_material_mode == 'msfs_anisotropic':
-            CreateMSFSAnisotropicShader(mat)
+        elif self.msfs_material_mode == 'msfs_anisotropic':
+            CreateMSFSAnisotropicShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = True
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = True
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_anisotropic material.")
 
-        elif mat.msfs_material_mode == 'msfs_sss':
-            CreateMSFSSSSShader(mat)
+        elif self.msfs_material_mode == 'msfs_sss':
+            CreateMSFSSSSShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = True
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = True
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = False
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = False
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_sss material.")
 
-        elif mat.msfs_material_mode == 'msfs_glass':
-            CreateMSFSGlassShader(mat)
+        elif self.msfs_material_mode == 'msfs_glass':
+            CreateMSFSGlassShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = True
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = True
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_glass material.")
 
-        elif mat.msfs_material_mode == 'msfs_decal':
-            CreateMSFSDecalShader(mat)
+        elif self.msfs_material_mode == 'msfs_decal':
+            CreateMSFSDecalShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = True
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = True
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = True
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = True
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_decal material.")
 
-        elif mat.msfs_material_mode == 'msfs_clearcoat':
-            CreateMSFSClearcoatShader(mat)
+        elif self.msfs_material_mode == 'msfs_clearcoat':
+            CreateMSFSClearcoatShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = True
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = True
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_clearcoat material.")
 
-        elif mat.msfs_material_mode == 'msfs_env_occluder':
-            CreateMSFSEnvOccluderShader(mat)
+        elif self.msfs_material_mode == 'msfs_env_occluder':
+            CreateMSFSEnvOccluderShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = False
-            mat.msfs_show_metallic = False
-            mat.msfs_show_normal = False
-            mat.msfs_show_emissive = False
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = False
+            self.msfs_show_metallic = False
+            self.msfs_show_normal = False
+            self.msfs_show_emissive = False
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = False
-            mat.msfs_show_no_cast_shadow = False
-            mat.msfs_show_double_sided = False
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = False
+            self.msfs_show_no_cast_shadow = False
+            self.msfs_show_double_sided = False
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = False
-            mat.msfs_show_road_material = False
+            self.msfs_show_collision_material = False
+            self.msfs_show_road_material = False
 
-            mat.msfs_show_ao_use_uv2 = False
-            mat.msfs_show_uv_clamp = False
+            self.msfs_show_ao_use_uv2 = False
+            self.msfs_show_uv_clamp = False
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = False
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = False
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_env_occluder material.")
 
-        elif mat.msfs_material_mode == 'msfs_fake_terrain':
-            CreateMSFSFakeTerrainShader(mat)
+        elif self.msfs_material_mode == 'msfs_fake_terrain':
+            CreateMSFSFakeTerrainShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_fake_terrain material.")
 
-        elif mat.msfs_material_mode == 'msfs_fresnel':
-            CreateMSFSFresnelShader(mat)
+        elif self.msfs_material_mode == 'msfs_fresnel':
+            CreateMSFSFresnelShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = True
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = True
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_fresnel material.")
 
-        elif mat.msfs_material_mode == 'msfs_windshield':
-            CreateMSFSWindshieldShader(mat)
+        elif self.msfs_material_mode == 'msfs_windshield':
+            CreateMSFSWindshieldShader(self)
  
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False #Unlock this when available
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False #Unlock this when available
 
-            mat.msfs_show_blend_mode = True
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = True
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = True
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = True
 
-            #mat.msfs_roughness_scale = 0.0
-            #mat.msfs_metallic_scale = 0.0
+            #self.msfs_roughness_scale = 0.0
+            #self.msfs_metallic_scale = 0.0
             
             #switch_msfs_blendmode()
-            if mat.msfs_blend_mode == 'BLEND':
-                MakeTranslucent(mat)
-            elif mat.msfs_blend_mode == 'MASKED':
-                MakeMasked(mat)
-            elif mat.msfs_blend_mode == 'DITHER':
-                MakeDither(mat)
+            if self.msfs_blend_mode == 'BLEND':
+                MakeTranslucent(self)
+            elif self.msfs_blend_mode == 'MASKED':
+                MakeMasked(self)
+            elif self.msfs_blend_mode == 'DITHER':
+                MakeDither(self)
             else:
-                MakeOpaque(mat)
+                MakeOpaque(self)
             
             print("Switched to msfs_windshield material.")
 
-        elif mat.msfs_material_mode == 'msfs_porthole':
-            CreateMSFSPortholeShader(mat)
+        elif self.msfs_material_mode == 'msfs_porthole':
+            CreateMSFSPortholeShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = True
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = True
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_porthole material.")
 
-        elif mat.msfs_material_mode == 'msfs_parallax':
-            CreateMSFSParallaxShader(mat)
+        elif self.msfs_material_mode == 'msfs_parallax':
+            CreateMSFSParallaxShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = True
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = True
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = True
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = True
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_parallax material.")
 
-        elif mat.msfs_material_mode == 'msfs_geo_decal':
-            CreateMSFSGeoDecalShader(mat)
+        elif self.msfs_material_mode == 'msfs_geo_decal':
+            CreateMSFSGeoDecalShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = True
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = True
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = True
-            mat.msfs_show_detail_metallic = True
-            mat.msfs_show_detail_normal = True
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = True
+            self.msfs_show_detail_metallic = True
+            self.msfs_show_detail_normal = True
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
 
             print("Switched to msfs_geo_decal material.")
 
-        elif mat.msfs_material_mode == 'msfs_hair':
-            CreateMSFSHairShader(mat)
+        elif self.msfs_material_mode == 'msfs_hair':
+            CreateMSFSHairShader(self)
 
-            mat.msfs_show_tint = True
-            mat.msfs_show_sss_color = True
+            self.msfs_show_tint = True
+            self.msfs_show_sss_color = True
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = True
-            mat.msfs_show_metallic = True
-            mat.msfs_show_normal = True
-            mat.msfs_show_emissive = True
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = True
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = True
+            self.msfs_show_metallic = True
+            self.msfs_show_normal = True
+            self.msfs_show_emissive = True
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = True
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = True
-            mat.msfs_show_no_cast_shadow = True
-            mat.msfs_show_double_sided = True
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = True
+            self.msfs_show_no_cast_shadow = True
+            self.msfs_show_double_sided = True
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = True
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = True
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = True
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = True
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
             
             print("Switched to msfs_hair material.")
 
-        elif mat.msfs_material_mode == 'msfs_invisible':
-            CreateMSFSInvisibleShader(mat)
+        elif self.msfs_material_mode == 'msfs_invisible':
+            CreateMSFSInvisibleShader(self)
 
-            mat.msfs_show_tint = False
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = False
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = False
-            mat.msfs_show_metallic = False
-            mat.msfs_show_normal = False
-            mat.msfs_show_emissive = False
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = False
+            self.msfs_show_metallic = False
+            self.msfs_show_normal = False
+            self.msfs_show_emissive = False
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = False
-            mat.msfs_show_no_cast_shadow = False
-            mat.msfs_show_double_sided = False
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = False
+            self.msfs_show_no_cast_shadow = False
+            self.msfs_show_double_sided = False
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = True
-            mat.msfs_show_road_material = True
+            self.msfs_show_collision_material = True
+            self.msfs_show_road_material = True
 
-            mat.msfs_show_ao_use_uv2 = False
-            mat.msfs_show_uv_clamp = True
+            self.msfs_show_ao_use_uv2 = False
+            self.msfs_show_uv_clamp = True
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = False
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = False
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
             
             print("Switched to msfs_invisible material.")
 
         else:
-            mat.msfs_show_tint = False
-            mat.msfs_show_sss_color = False
+            self.msfs_show_tint = False
+            self.msfs_show_sss_color = False
 
-            mat.msfs_show_glass_parameters = False
-            mat.msfs_show_decal_parameters = False
-            mat.msfs_show_fresnel_parameters = False
-            mat.msfs_show_parallax_parameters = False
-            mat.msfs_show_geo_decal_parameters = False
+            self.msfs_show_glass_parameters = False
+            self.msfs_show_decal_parameters = False
+            self.msfs_show_fresnel_parameters = False
+            self.msfs_show_parallax_parameters = False
+            self.msfs_show_geo_decal_parameters = False
 
-            mat.msfs_show_albedo = False
-            mat.msfs_show_metallic = False
-            mat.msfs_show_normal = False
-            mat.msfs_show_emissive = False
-            mat.msfs_show_detail_albedo = False
-            mat.msfs_show_detail_metallic = False
-            mat.msfs_show_detail_normal = False
-            mat.msfs_show_blend_mask = False
-            mat.msfs_show_anisotropic_direction = False
-            mat.msfs_show_clearcoat = False
-            mat.msfs_show_behind_glass = False
-            mat.msfs_show_wiper_mask = False
+            self.msfs_show_albedo = False
+            self.msfs_show_metallic = False
+            self.msfs_show_normal = False
+            self.msfs_show_emissive = False
+            self.msfs_show_detail_albedo = False
+            self.msfs_show_detail_metallic = False
+            self.msfs_show_detail_normal = False
+            self.msfs_show_blend_mask = False
+            self.msfs_show_anisotropic_direction = False
+            self.msfs_show_clearcoat = False
+            self.msfs_show_behind_glass = False
+            self.msfs_show_wiper_mask = False
 
-            mat.msfs_show_blend_mode = False
-            mat.use_backface_culling = not mat.msfs_double_sided
+            self.msfs_show_blend_mode = False
+            self.use_backface_culling = not self.msfs_double_sided
 
-            mat.msfs_show_draworder = False
-            mat.msfs_show_no_cast_shadow = False
-            mat.msfs_show_double_sided = False
-            mat.msfs_show_responsive_aa = False
-            mat.msfs_show_day_night_cycle = False
+            self.msfs_show_draworder = False
+            self.msfs_show_no_cast_shadow = False
+            self.msfs_show_double_sided = False
+            self.msfs_show_responsive_aa = False
+            self.msfs_show_day_night_cycle = False
 
-            mat.msfs_show_collision_material = False
-            mat.msfs_show_road_material = False
+            self.msfs_show_collision_material = False
+            self.msfs_show_road_material = False
 
-            mat.msfs_show_ao_use_uv2 = False
-            mat.msfs_show_uv_clamp = False
+            self.msfs_show_ao_use_uv2 = False
+            self.msfs_show_uv_clamp = False
 
-            mat.msfs_show_alpha_cutoff = False
-            mat.msfs_show_blend_threshold = False
+            self.msfs_show_alpha_cutoff = False
+            self.msfs_show_blend_threshold = False
             #New
-            mat.msfs_show_pearl = False
-            mat.msfs_show_windshield_options = False
+            self.msfs_show_pearl = False
+            self.msfs_show_windshield_options = False
             
             print("Switched to non-sim material.")
 
     def match_albedo(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         bsdf_node = nodes.get("bsdf")
         albedo = nodes.get("albedo")
@@ -812,9 +810,9 @@ class MSFS_LI_material():
         albedo_detail_mix = nodes.get("albedo_detail_mix")
 
         if albedo != None:
-            nodes["albedo"].image = mat.msfs_albedo_texture
+            nodes["albedo"].image = self.msfs_albedo_texture
 
-            if mat.msfs_albedo_texture != None:
+            if self.msfs_albedo_texture != None:
                 # Create the link:
                 if albedo_tint_mix != None:
                     links.new(albedo.outputs["Color"], albedo_tint_mix.inputs["Color2"])
@@ -830,9 +828,8 @@ class MSFS_LI_material():
                     links.remove(l)                
 
     def match_metallic(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         #Try to generate the links:
         bsdf_node = nodes.get("bsdf")
@@ -840,9 +837,9 @@ class MSFS_LI_material():
         metallic_sep_node = nodes.get("metallic_sep")
 
         if metallic != None:
-            nodes["metallic"].image = mat.msfs_metallic_texture
+            nodes["metallic"].image = self.msfs_metallic_texture
 
-            if mat.msfs_metallic_texture != None:
+            if self.msfs_metallic_texture != None:
                 nodes["metallic"].image.colorspace_settings.name = 'Non-Color'
 
                 #link to bsdf
@@ -858,18 +855,17 @@ class MSFS_LI_material():
                     links.remove(l)                
 
     def match_normal(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         bsdf_node = nodes.get("bsdf")
         normal = nodes.get("normal")
         normal_map_node = nodes.get("normal_map_node")
 
         if normal != None:
-            nodes["normal"].image = mat.msfs_normal_texture
+            nodes["normal"].image = self.msfs_normal_texture
 
-            if mat.msfs_normal_texture != None:
+            if self.msfs_normal_texture != None:
                 nodes["normal"].image.colorspace_settings.name = 'Non-Color'
                 if (bsdf_node != None and normal_map_node != None):
                         links.new(normal_map_node.outputs["Normal"], bsdf_node.inputs["Normal"])
@@ -879,9 +875,8 @@ class MSFS_LI_material():
                     links.remove(l)                
 
     def match_emissive(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         #Try to generate the links:
         bsdf_node = nodes.get("bsdf")
@@ -889,9 +884,9 @@ class MSFS_LI_material():
         emissive_tint_mix = nodes.get("emissive_tint_mix")
 
         if emissive != None:
-            nodes["emissive"].image = mat.msfs_emissive_texture
+            nodes["emissive"].image = self.msfs_emissive_texture
 
-            if mat.msfs_emissive_texture != "":
+            if self.msfs_emissive_texture != "":
                 #link to bsdf
                 if (bsdf_node != None and emissive_tint_mix != None):
                     links.new(emissive_tint_mix.outputs["Color"], bsdf_node.inputs["Emission"])
@@ -902,17 +897,16 @@ class MSFS_LI_material():
                     links.remove(l)                
 
     def match_detail_albedo(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         albedo_detail_mix = nodes.get("albedo_detail_mix")
         detail_albedo = nodes.get("detail_albedo")
 
         if detail_albedo != None:
-            nodes["detail_albedo"].image = mat.msfs_detail_albedo_texture
+            nodes["detail_albedo"].image = self.msfs_detail_albedo_texture
             
-            if mat.msfs_detail_albedo_texture.name != "":
+            if self.msfs_detail_albedo_texture.name != "":
                 # Create the link:
                 if (detail_albedo != None and albedo_detail_mix != None):
                     links.new(detail_albedo.outputs["Color"], albedo_detail_mix.inputs["Color2"])
@@ -925,17 +919,16 @@ class MSFS_LI_material():
                     albedo_detail_mix.inputs[0].default_value = 0.0
 
     def match_detail_metallic(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         metallic_detail_mix = nodes.get("metallic_detail_mix")
         detail_metallic = nodes.get("detail_metallic")
 
         if detail_metallic != None:
-            detail_metallic.image = mat.msfs_detail_metallic_texture
+            detail_metallic.image = self.msfs_detail_metallic_texture
             detail_metallic.image.colorspace_settings.name = 'Non-Color'
-            if mat.msfs_detail_metallic_texture.name != "":
+            if self.msfs_detail_metallic_texture.name != "":
                 # Create the link:
                 if (detail_metallic != None and metallic_detail_mix != None):
                     links.new(detail_metallic.outputs["Color"], metallic_detail_mix.inputs["Color2"])
@@ -948,17 +941,16 @@ class MSFS_LI_material():
                     metallic_detail_mix.inputs[0].default_value = 0.0
 
     def match_detail_normal(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         normal_detail_mix = nodes.get("normal_detail_mix")
         detail_normal = nodes.get("detail_normal")
 
         if detail_normal != None:
-            detail_normal.image = mat.msfs_detail_normal_texture
+            detail_normal.image = self.msfs_detail_normal_texture
             detail_normal.image.colorspace_settings.name = 'Non-Color'
-            if mat.msfs_detail_normal_texture.name != "":
+            if self.msfs_detail_normal_texture.name != "":
                 # Create the link:
                 if (detail_normal != None and normal_detail_mix != None):
                     links.new(detail_normal.outputs["Color"], normal_detail_mix.inputs["Color2"])
@@ -971,12 +963,11 @@ class MSFS_LI_material():
                     normal_detail_mix.inputs[0].default_value = 0.0
 
     def match_blend_mask(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         if nodes.get("blend_mask", None) != None:
-            nodes["blend_mask"].image = mat.msfs_blend_mask_texture
+            nodes["blend_mask"].image = self.msfs_blend_mask_texture
             nodes["blend_mask"].image.colorspace_settings.name = 'Non-Color'
 
             albedo_detail_mix = nodes.get("albedo_detail_mix")
@@ -984,8 +975,8 @@ class MSFS_LI_material():
             normal_detail_mix = nodes.get("normal_detail_mix")
 
             #link the node, if a texture is set:
-            if mat.msfs_blend_mask_texture.name != "":
-                if mat.msfs_blend_mask_texture.channels > 3:
+            if self.msfs_blend_mask_texture.name != "":
+                if self.msfs_blend_mask_texture.channels > 3:
                     if albedo_detail_mix != None:
                         links.new(nodes["blend_mask"].outputs["Alpha"],albedo_detail_mix.inputs["Fac"])
                     if metallic_detail_mix != None:
@@ -1011,25 +1002,23 @@ class MSFS_LI_material():
                     links.remove(l)                
 
     def match_anisotropic_direction(self,context):
-        mat = context.activate_object.active_material
-        if mat.node_tree.nodes.get("anisotropic_direction", None) != None:
-            mat.node_tree.nodes["anisotropic_direction"].image = mat.msfs_anisotropic_direction_texture
-            mat.node_tree.nodes["anisotropic_direction"].image.colorspace_settings.name = 'Non-Color'
+        if self.node_tree.nodes.get("anisotropic_direction", None) != None:
+            self.node_tree.nodes["anisotropic_direction"].image = self.msfs_anisotropic_direction_texture
+            self.node_tree.nodes["anisotropic_direction"].image.colorspace_settings.name = 'Non-Color'
 
     def match_clearcoat(self,context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         clearcoat = nodes.get("clearcoat")
         clearcoat_sep = nodes.get("clearcoat_sep")
         bsdf_node = nodes.get("bsdf")
 
         if clearcoat != None:
-            mat.node_tree.nodes["clearcoat"].image = mat.msfs_clearcoat_texture
-            mat.node_tree.nodes["clearcoat"].image.colorspace_settings.name = 'Non-Color'
+            self.node_tree.nodes["clearcoat"].image = self.msfs_clearcoat_texture
+            self.node_tree.nodes["clearcoat"].image.colorspace_settings.name = 'Non-Color'
             if (clearcoat_sep != None and bsdf_node != None):
-                if mat.msfs_clearcoat_texture.name != "":
+                if self.msfs_clearcoat_texture.name != "":
                     links.new(clearcoat_sep.outputs["R"],bsdf_node.inputs["Clearcoat"])
                     links.new(clearcoat_sep.outputs["G"],bsdf_node.inputs["Clearcoat Roughness"])
                 else:
@@ -1039,17 +1028,16 @@ class MSFS_LI_material():
                     links.remove(l)
 
     def match_behind_glass(self,context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
         #Try to generate the links:
         albedo_detail_mix = nodes.get("albedo_detail_mix")
         behind_glass = nodes.get("behind_glass")
 
         if behind_glass != None:
-            mat.node_tree.nodes["behind_glass"].image = mat.msfs_behind_glass_texture
-            if mat.msfs_behind_glass_texture.name != "":
+            self.node_tree.nodes["behind_glass"].image = self.msfs_behind_glass_texture
+            if self.msfs_behind_glass_texture.name != "":
                 # Create the link:
                 if (behind_glass != None and albedo_detail_mix != None):
                     links.new(behind_glass.outputs["Color"], albedo_detail_mix.inputs["Color2"])
@@ -1060,106 +1048,92 @@ class MSFS_LI_material():
                     links.remove(l)                
 
     def match_wiper_mask(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
-        links = mat.node_tree.links
+        nodes = self.node_tree.nodes
+        links = self.node_tree.links
 
 
     def switch_msfs_blendmode(self, context):
-        mat = context.active_object.active_material
-        if mat.msfs_material_mode == 'msfs_windshield' or mat.msfs_blend_mode == 'BLEND':
-            MakeTranslucent(mat)
-        elif mat.msfs_blend_mode == 'MASKED':
-            MakeMasked(mat)
-        elif mat.msfs_blend_mode == 'DITHER':
-            MakeDither(mat)
+        if self.msfs_material_mode == 'msfs_windshield' or self.msfs_blend_mode == 'BLEND':
+            MakeTranslucent(self)
+        elif self.msfs_blend_mode == 'MASKED':
+            MakeMasked(self)
+        elif self.msfs_blend_mode == 'DITHER':
+            MakeDither(self)
         else:
-            MakeOpaque(mat)
+            MakeOpaque(self)
 
     #Update functions for the "tint" parameters:
     def update_color_albedo_mix(self, context):
-        mat = context.active_object.active_material
-        if mat.node_tree.nodes.get("bsdf", None) != None:
-            mat.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[0] = mat.msfs_color_albedo_mix[0]
-            mat.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[1] = mat.msfs_color_albedo_mix[1]
-            mat.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[2] = mat.msfs_color_albedo_mix[2]
-            mat.node_tree.nodes.get("albedo_tint").outputs[0].default_value[0] = mat.msfs_color_albedo_mix[0]
-            mat.node_tree.nodes.get("albedo_tint").outputs[0].default_value[1] = mat.msfs_color_albedo_mix[1]
-            mat.node_tree.nodes.get("albedo_tint").outputs[0].default_value[2] = mat.msfs_color_albedo_mix[2]
-            mat.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[0] = mat.msfs_color_albedo_mix[0]
-            mat.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[1] = mat.msfs_color_albedo_mix[1]
-            mat.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[2] = mat.msfs_color_albedo_mix[2]
+        if self.node_tree.nodes.get("bsdf", None) != None:
+            self.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[0] = self.msfs_color_albedo_mix[0]
+            self.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[1] = self.msfs_color_albedo_mix[1]
+            self.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[2] = self.msfs_color_albedo_mix[2]
+            self.node_tree.nodes.get("albedo_tint").outputs[0].default_value[0] = self.msfs_color_albedo_mix[0]
+            self.node_tree.nodes.get("albedo_tint").outputs[0].default_value[1] = self.msfs_color_albedo_mix[1]
+            self.node_tree.nodes.get("albedo_tint").outputs[0].default_value[2] = self.msfs_color_albedo_mix[2]
+            self.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[0] = self.msfs_color_albedo_mix[0]
+            self.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[1] = self.msfs_color_albedo_mix[1]
+            self.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[2] = self.msfs_color_albedo_mix[2]
 
     def update_color_alpha_mix(self, context):
-        mat = context.active_object.active_material
-        if mat.node_tree.nodes.get("bsdf", None) != None:
-            mat.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[3] = mat.msfs_color_alpha_mix
-            mat.node_tree.nodes["alpha_multiply"].inputs[1].default_value = mat.msfs_color_alpha_mix
+        if self.node_tree.nodes.get("bsdf", None) != None:
+            self.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[3] = self.msfs_color_alpha_mix
+            self.node_tree.nodes["alpha_multiply"].inputs[1].default_value = self.msfs_color_alpha_mix
             
     def update_color_base_mix(self, context):
-        mat = context.active_object.active_material
-        #if mat.node_tree.nodes.get("bsdf", None) != None:
-            #mat.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[3] = mat.msfs_color_alpha_mix
-        mat.node_tree.nodes.get("albedo_tint").outputs[0].default_value[3] = mat.msfs_color_base_mix
-        mat.node_tree.nodes["albedo_detail_mix"].inputs[0].default_value = mat.msfs_color_base_mix
-        mat.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[3] = mat.msfs_color_base_mix
+        #if self.node_tree.nodes.get("bsdf", None) != None:
+            #self.node_tree.nodes["bsdf"].inputs.get('Base Color').default_value[3] = self.msfs_color_alpha_mix
+        self.node_tree.nodes.get("albedo_tint").outputs[0].default_value[3] = self.msfs_color_base_mix
+        self.node_tree.nodes["albedo_detail_mix"].inputs[0].default_value = self.msfs_color_base_mix
+        self.node_tree.nodes["albedo_detail_mix"].inputs[2].default_value[3] = self.msfs_color_base_mix
 
     def update_color_emissive_mix(self, context):
-        mat = context.active_object.active_material
-        nodes = mat.node_tree.nodes
+        nodes = self.node_tree.nodes
 
         bsdf = nodes.get("bsdf", None)
         emissive_tint = nodes.get("emissive_tint", None)
 
         if bsdf != None:
-            bsdf.inputs.get('Emission').default_value[0] = mat.msfs_color_emissive_mix[0]
-            bsdf.inputs.get('Emission').default_value[1] = mat.msfs_color_emissive_mix[1]
-            bsdf.inputs.get('Emission').default_value[2] = mat.msfs_color_emissive_mix[2]
+            bsdf.inputs.get('Emission').default_value[0] = self.msfs_color_emissive_mix[0]
+            bsdf.inputs.get('Emission').default_value[1] = self.msfs_color_emissive_mix[1]
+            bsdf.inputs.get('Emission').default_value[2] = self.msfs_color_emissive_mix[2]
         if emissive_tint != None:
-            emissive_tint.outputs[0].default_value[0] = mat.msfs_color_emissive_mix[0]
-            emissive_tint.outputs[0].default_value[1] = mat.msfs_color_emissive_mix[1]
-            emissive_tint.outputs[0].default_value[2] = mat.msfs_color_emissive_mix[2]
+            emissive_tint.outputs[0].default_value[0] = self.msfs_color_emissive_mix[0]
+            emissive_tint.outputs[0].default_value[1] = self.msfs_color_emissive_mix[1]
+            emissive_tint.outputs[0].default_value[2] = self.msfs_color_emissive_mix[2]
 
     def update_color_sss(self, context):
-        mat = context.active_object.active_material
-        if mat.node_tree.nodes.get("bsdf", None) != None:
-            mat.node_tree.nodes["bsdf"].inputs.get("Subsurface Color").default_value = mat.msfs_color_sss
+        if self.node_tree.nodes.get("bsdf", None) != None:
+            self.node_tree.nodes["bsdf"].inputs.get("Subsurface Color").default_value = self.msfs_color_sss
 
     def update_double_sided(self, context):
-        mat = context.active_object.active_material
-        mat.use_backface_culling = not mat.msfs_double_sided
+        self.use_backface_culling = not self.msfs_double_sided
 
     def update_alpha_cutoff(self,context):
-        mat = context.active_object.active_material
-        mat.alpha_threshold = mat.msfs_alpha_cutoff
+        self.alpha_threshold = self.msfs_alpha_cutoff
 
     def update_normal_scale(self,context):
-        mat = context.active_object.active_material
-        if mat.node_tree.nodes.get("normal_map_node", None) != None:
-            mat.node_tree.nodes["normal_map_node"].inputs["Strength"].default_value = mat.msfs_normal_scale
+        if self.node_tree.nodes.get("normal_map_node", None) != None:
+            self.node_tree.nodes["normal_map_node"].inputs["Strength"].default_value = self.msfs_normal_scale
 
     def update_detail_uv_scale(self,context):
-        mat = context.active_object.active_material
-        if mat.node_tree.nodes.get("detail_uv_scale", None) != None:
-            mat.node_tree.nodes["detail_uv_scale"].inputs["Scale"].default_value[0] = mat.msfs_detail_uv_scale
-            mat.node_tree.nodes["detail_uv_scale"].inputs["Scale"].default_value[1] = mat.msfs_detail_uv_scale
-            mat.node_tree.nodes["detail_uv_scale"].inputs["Scale"].default_value[2] = mat.msfs_detail_uv_scale
+        if self.node_tree.nodes.get("detail_uv_scale", None) != None:
+            self.node_tree.nodes["detail_uv_scale"].inputs["Scale"].default_value[0] = self.msfs_detail_uv_scale
+            self.node_tree.nodes["detail_uv_scale"].inputs["Scale"].default_value[1] = self.msfs_detail_uv_scale
+            self.node_tree.nodes["detail_uv_scale"].inputs["Scale"].default_value[2] = self.msfs_detail_uv_scale
 
     def update_detail_uv_offset(self,context):
-        mat=context.active_object.active_material
-        if mat.node_tree.nodes.get("detail_uv_scale", None) != None:
-            mat.node_tree.nodes["detail_uv_scale"].inputs["Location"].default_value[0] = mat.msfs_detail_uv_offset_x
-            mat.node_tree.nodes["detail_uv_scale"].inputs["Location"].default_value[1] = mat.msfs_detail_uv_offset_y
+        if self.node_tree.nodes.get("detail_uv_scale", None) != None:
+            self.node_tree.nodes["detail_uv_scale"].inputs["Location"].default_value[0] = self.msfs_detail_uv_offset_x
+            self.node_tree.nodes["detail_uv_scale"].inputs["Location"].default_value[1] = self.msfs_detail_uv_offset_y
 
     def update_roughness_scale(self,context):
-        mat=context.active_object.active_material
-        if mat.node_tree.nodes.get("bsdf", None) != None:
-            mat.node_tree.nodes["bsdf"].inputs["Roughness"].default_value = mat.msfs_roughness_scale
+        if self.node_tree.nodes.get("bsdf", None) != None:
+            self.node_tree.nodes["bsdf"].inputs["Roughness"].default_value = self.msfs_roughness_scale
 
     def update_metallic_scale(self,context):
-        mat=context.active_object.active_material
-        if mat.node_tree.nodes.get("bsdf", None) != None:
-            mat.node_tree.nodes["bsdf"].inputs["Metallic"].default_value = mat.msfs_metallic_scale
+        if self.node_tree.nodes.get("bsdf", None) != None:
+            self.node_tree.nodes["bsdf"].inputs["Metallic"].default_value = self.msfs_metallic_scale
 
 
     # Main material mode, in accordance with MSFS material shaders:
