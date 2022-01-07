@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import bpy
-from msfs_light import MSFSLight
+from .msfs_light import MSFSLight
+from .msfs_gizmo import MSFSGizmo
 
 class Import:
 
@@ -26,6 +27,8 @@ class Import:
 
     
     # Create gizmos
+    def gather_import_node_after_hook(self, vnode, gltf_node, blender_object, import_settings):
+        MSFSGizmo.create(gltf_node, blender_object, import_settings)
 
     # Create materials
 
