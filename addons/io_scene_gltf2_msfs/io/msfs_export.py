@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import bpy
-import math
 
 from .msfs_light import MSFSLight
 from .msfs_gizmo import MSFSGizmo
