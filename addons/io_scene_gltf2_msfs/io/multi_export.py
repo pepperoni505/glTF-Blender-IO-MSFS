@@ -8,19 +8,18 @@ class MultiExportLOD(bpy.types.PropertyGroup):
     lod_value: bpy.props.IntProperty(name="", default=0, min=0)  # TODO: add max
     flatten_on_export: bpy.props.BoolProperty(name="", default=False)
     keep_instances: bpy.props.BoolProperty(name="", default=False)
-    file_name: bpy.props.StringProperty(name="", default="")  # TODO: figure this out
+    file_name: bpy.props.StringProperty(name="", default="")
 
 class MultiExporterPropertyGroup(bpy.types.PropertyGroup):
     collection: bpy.props.PointerProperty(name="", type=bpy.types.Collection)
     lods: bpy.props.CollectionProperty(type=MultiExportLOD)
-    folder_name: bpy.props.StringProperty(name="", default="")  # TODO: figure this out
+    folder_name: bpy.props.StringProperty(name="", default="")
 
 class MSFSMultiExporterProperties():
     bpy.types.Scene.msfs_multi_exporter_current_tab = bpy.props.EnumProperty(items=
             (("OBJECTS", "Objects", ""),
             ("PRESETS", " Presets", "")),
     )
-
 
 def update_lods(scene):
     property_collection = bpy.context.scene.msfs_multi_exporter_collection
@@ -76,7 +75,6 @@ class MSFS_PT_MultiExporterObjectsView(bpy.types.Panel):
         layout.use_property_split = True
         layout.use_property_decorate = False  # No animation.
 
-        ######
         property_collection = context.scene.msfs_multi_exporter_collection
         total_lods = 0
         for prop in property_collection:
@@ -145,7 +143,10 @@ def register():
     bpy.app.handlers.depsgraph_update_post.append(update_lods)
 
 def unregister():
-    bpy.app.handlers.depsgraph_update_post.remove(update_lods)
+    try:
+        bpy.app.handlers.depsgraph_update_post.remove(update_lods)
+    except ValueError:
+        pass
 
 def register_panel():
     # Register the panel on demand, we need to be sure to only register it once
