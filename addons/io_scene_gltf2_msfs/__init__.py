@@ -168,7 +168,7 @@ def unregister_panel():
         if hasattr(module, "unregister_panel"):
             module.unregister_panel()
 
-from .exp.msfs_export import Export
+from .io.msfs_export import Export
 class glTF2ExportUserExtension(Export):
     def __init__(self):
         # We need to wait until we create the gltf2UserExtension to import the gltf2 modules
