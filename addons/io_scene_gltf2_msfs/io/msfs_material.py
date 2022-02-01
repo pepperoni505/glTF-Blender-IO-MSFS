@@ -216,7 +216,7 @@ class MSFSMaterial:
             )
 
         # Set Asobo tags
-        if blender_material.msfs_show_road_material or blender_material.show_collision_material:
+        if blender_material.msfs_show_road_material or blender_material.msfs_show_collision_material:
             tags = []
             if blender_material.msfs_road_material == True:
                 tags.append("Road")
