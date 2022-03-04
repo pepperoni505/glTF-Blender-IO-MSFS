@@ -31,7 +31,7 @@ class MultiExporterObjectLOD(bpy.types.PropertyGroup):
     file_name: bpy.props.StringProperty(name="", default="")
 
 class MultiExporterObjectGroup(bpy.types.PropertyGroup):
-    group_name: bpy.props.StringProperty(name="", default="")
+    collection: bpy.props.PointerProperty(name="", type=bpy.types.Collection)
     expanded: bpy.props.BoolProperty(name="", default=True)
     lods: bpy.props.CollectionProperty(type=MultiExporterObjectLOD)
     folder_name: bpy.props.StringProperty(name="", default="", subtype="DIR_PATH")
@@ -101,7 +101,7 @@ class MSFS_OT_MultiExportGLTF2(bpy.types.Operator):
                         dom = xml.dom.minidom.parseString(etree.tostring(root))
                         xml_string = dom.toprettyxml(encoding='utf-8')
 
-                        with open(os.path.join(object_group.folder_name, object_group.group_name + ".xml"), 'wb') as f:
+                        with open(os.path.join(object_group.folder_name, object_group.collection.name + ".xml"), 'wb') as f:
                             f.write(xml_string)
                             f.close()
                 
@@ -168,11 +168,7 @@ class MSFS_OT_ReloadObjectGroups(bpy.types.Operator):
         # Remove deleted objects and empty object groups
         for i, object_group in enumerate(object_groups):
             for j, lod in enumerate(object_group.lods):
-                if not lod.object.name in bpy.context.scene.objects:
-                    object_groups[i].lods.remove(j)
-
-                # Make sure object still matches group name
-                if not self.get_group_from_object_name(lod.object.name) == object_group.group_name:
+                if not lod.object in list(object_group.collection.objects) or not self.get_group_from_object_name(lod.object.name) == object_group.collection.name:
                     object_groups[i].lods.remove(j)
 
             if len(object_group.lods) == 0:
@@ -180,25 +176,27 @@ class MSFS_OT_ReloadObjectGroups(bpy.types.Operator):
 
         # Search all objects in scene to find object groups
         found_object_groups = {}
-        for obj in bpy.context.scene.objects:
-            if obj.parent is None: # Only search "root" objects
-                group_name = self.get_group_from_object_name(obj.name)
+        for collection in bpy.data.collections:
+            for obj in collection.objects:
+                if obj.parent is None: # Only search "root" objects
+                    if self.get_group_from_object_name(obj.name) != collection.name:
+                        continue
 
-                # Set object group or append
-                if group_name in found_object_groups.keys():
-                    found_object_groups[group_name].append(obj)
-                else:
-                    found_object_groups[group_name] = [obj]
+                    # Set object group or append
+                    if collection in found_object_groups.keys():
+                        found_object_groups[collection].append(obj)
+                    else:
+                        found_object_groups[collection] = [obj]
 
         # Create object groups and LODs
-        for _, (object_group_name, objects) in enumerate(found_object_groups.items()):
+        for _, (collection, objects) in enumerate(found_object_groups.items()):
             # Check if object group already exists, and if it doesn't, create one
-            if not object_group_name in [object_group.group_name for object_group in object_groups]:
+            if not collection in [object_group.collection for object_group in object_groups]:
                 object_group = object_groups.add()
-                object_group.group_name = object_group_name
+                object_group.collection = collection
             else:
                 for object_group in object_groups:
-                    if object_group.group_name == object_group_name:
+                    if object_group.collection == collection:
                         break
             
             # Set all LODs in object group
@@ -361,7 +359,7 @@ class MSFS_PT_MultiExporterObjectsView(bpy.types.Panel):
                 row = layout.row()
                 if len(object_group.lods) > 0:
                     box = row.box()
-                    box.prop(object_group, "expanded", text=object_group.group_name,
+                    box.prop(object_group, "expanded", text=object_group.collection.name,
                              icon="DOWNARROW_HLT" if object_group.expanded else "RIGHTARROW", icon_only=True, emboss=False)
                     if object_group.expanded:
                         box.prop(object_group, "generate_xml", text="Generate XML")
