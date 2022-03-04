@@ -158,9 +158,6 @@ class MSFS_OT_ReloadObjectGroups(bpy.types.Operator):
             for match in matches:
                 filtered_string = object_name.replace(match, "")
             return filtered_string
-        else:
-            # If prefix or suffix isn't found, use the object name as the group
-            return object_name
 
     def execute(self, context):
         object_groups = bpy.context.scene.msfs_multi_exporter_object_groups
