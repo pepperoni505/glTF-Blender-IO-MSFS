@@ -107,6 +107,10 @@ class MSFS_ShaderNodes(Enum):
     blendCompMap = "Blend Occlusion(R) Roughness(G) Metallic(B) Map"
     vertexColor = "Vertex Color"
 
+class MSFS_AnisotropicNodes(Enum):
+    anisotropicTex = "Anisotropic Texture"
+    separateAnisotropic = "Separate Anisotropic"
+
 
 class MSFS_Material:
 
@@ -156,7 +160,7 @@ class MSFS_Material:
         MSFS_Material_Property_Update.update_blend_mask_texture(
             self.material, bpy.context
         )
-        MSFS_Material_Property_Update.update_wetness_ao_texture(
+        MSFS_Material_Property_Update.update_extra_slot1_texture(
             self.material, bpy.context
         )
         MSFS_Material_Property_Update.update_dirt_texture(self.material, bpy.context)
@@ -201,12 +205,16 @@ class MSFS_Material:
         self.nodebsdf = self.addNode(
             "ShaderNodeBsdfPrincipled", {"location": (500.0, 0.0), "hide": False}
         )
-        gltfSettingsNodeTree = bpy.data.node_groups.new(
-            "glTF Settings", "ShaderNodeTree"
-        )
-        gltfSettingsNodeTree.nodes.new("NodeGroupInput")
-        gltfSettingsNodeTree.inputs.new("NodeSocketFloat", "Occlusion")
-        gltfSettingsNodeTree.inputs[0].default_value = 1.000
+        if bpy.data.node_groups.get(MSFS_ShaderNodes.glTFSettings.value):
+            gltfSettingsNodeTree = bpy.data.node_groups[MSFS_ShaderNodes.glTFSettings.value]
+        else:
+            gltfSettingsNodeTree = bpy.data.node_groups.new(
+                "glTF Settings", "ShaderNodeTree"
+            )
+            gltfSettingsNodeTree.nodes.new("NodeGroupInput")
+            gltfSettingsNodeTree.inputs.new("NodeSocketFloat", "Occlusion")
+            gltfSettingsNodeTree.inputs[0].default_value = 1.000
+
         self.nodeglTFSettings = self.addNode(
             "ShaderNodeGroup",
             {
@@ -278,13 +286,6 @@ class MSFS_Material:
         self.nodeDetailCompTex = self.addNode(
             "ShaderNodeTexImage",
             {"name": MSFS_ShaderNodes.detailCompTex.value, "location": (-800, -350.0)},
-        )
-        self.nodeDetailNormal = self.addNode(
-            "ShaderNodeTexImage",
-            {
-                "name": MSFS_ShaderNodes.detailNormalTex.value,
-                "location": (-500, -1300.0),
-            },
         )
         self.nodeDetailNormalScale = self.addNode(
             "ShaderNodeValue",
@@ -385,7 +386,12 @@ class MSFS_Material:
         # emissive operators
         mulEmissiveNode = self.addNode(
             "ShaderNodeMixRGB",
-            {"name": MSFS_ShaderNodes.emissiveMul.value, "location": (0.0, -550.0)},
+            {
+                "name": MSFS_ShaderNodes.emissiveMul.value,
+                "blend_type": "MULTIPLY", 
+                "location": (0.0, -550.0),
+            },
+            
         )
 
         # comp operators
@@ -559,9 +565,49 @@ class MSFS_Material:
             'nodes["{0}"].inputs[20]'.format(MSFS_ShaderNodes.principledBSDF.value),
         )
 
+    def anisotropicShaderTree(self):
+        self.nodeAnisotropicTex = self.addNode(
+            "ShaderNodeTexImage",
+            {"name": MSFS_AnisotropicNodes.anisotropicTex.value, "location": (-500, -800.0)},
+        )
+        self.nodeSeparateAnisotropic = self.addNode(
+            "ShaderNodeSeparateRGB",
+            {"name": MSFS_AnisotropicNodes.separateAnisotropic.value, "location": (-300, -800.0)},
+        )
+        self.innerLink(
+                'nodes["{0}"].outputs[0]'.format(MSFS_AnisotropicNodes.anisotropicTex.value),
+                'nodes["{0}"].inputs[0]'.format(MSFS_AnisotropicNodes.separateAnisotropic.value),
+            )
+
+
+    def setAnisotropicTex(self, tex):
+        self.nodeAnisotropicTex = self.getNode(MSFS_AnisotropicNodes.anisotropicTex.value)
+        self.nodeAnisotropicTex.image = tex
+        if not self.nodeAnisotropicTex.image:
+            self.principledBSDF = self.getNode(MSFS_ShaderNodes.principledBSDF.value)
+            self.unLinkNodeInput(self.principledBSDF, 10)
+            self.unLinkNodeInput(self.principledBSDF, 11)
+        elif self.nodeAnisotropicTex.image :
+            self.innerLink(
+                'nodes["{0}"].outputs[0]'.format(
+                    MSFS_AnisotropicNodes.separateAnisotropic.value
+                ),
+                'nodes["{0}"].inputs[10]'.format(MSFS_ShaderNodes.principledBSDF.value),
+            )
+            self.innerLink(
+                'nodes["{0}"].outputs[2]'.format(
+                    MSFS_AnisotropicNodes.separateAnisotropic.value
+                ),
+                'nodes["{0}"].inputs[11]'.format(MSFS_ShaderNodes.principledBSDF.value),
+            )
+
     def setBaseColor(self, color):
         self.nodeBaseColorRGB = self.getNode(MSFS_ShaderNodes.baseColorRGB.value)
         self.nodeBaseColorA = self.getNode(MSFS_ShaderNodes.baseColorA.value)
+        if not self.nodeBaseColorA:
+            return
+        if not self.nodeBaseColorRGB:
+            return
         colorValue = self.nodeBaseColorRGB.outputs[0].default_value
         colorValue[0] = color[0]
         colorValue[1] = color[1]
@@ -571,6 +617,8 @@ class MSFS_Material:
 
     def setBaseColorTex(self, tex):
         self.nodeBaseColorTex = self.getNode(MSFS_ShaderNodes.baseColorTex.value)
+        if not self.nodeBaseColorTex:
+            return
         self.nodeBaseColorTex.image = tex
         self.updateColorLinks()
 
@@ -677,21 +725,29 @@ class MSFS_Material:
 
     def setCompTex(self, tex):
         self.nodeCompTex = self.getNode(MSFS_ShaderNodes.compTex.value)
-        self.nodeCompTex.image = tex
-        self.updateCompLinks()
+        if tex is not None:
+            self.nodeCompTex.image = tex
+            self.nodeCompTex.image.colorspace_settings.name = "Non-Color"
+            self.updateCompLinks()
 
     def setDetailCompTex(self, tex):
         self.nodeDetailCompTex = self.getNode(MSFS_ShaderNodes.detailCompTex.value)
-        self.nodeDetailCompTex.image = tex
-        self.updateCompLinks()
+        if tex is not None:
+            self.nodeDetailCompTex.image = tex
+            self.nodeDetailCompTex.image.colorspace_settings.name = "Non-Color"
+            self.updateCompLinks()
 
     def setRoughnessScale(self, scale):
         self.nodeRoughnessScale = self.getNode(MSFS_ShaderNodes.roughnessScale.value)
+        if not self.nodeRoughnessScale:
+            return
         self.nodeRoughnessScale.outputs[0].default_value = scale
         self.updateCompLinks()
 
     def setMetallicScale(self, scale):
         self.nodeMetallicScale = self.getNode(MSFS_ShaderNodes.metallicScale.value)
+        if not self.nodeMetallicScale:
+            return
         self.nodeMetallicScale.outputs[0].default_value = scale
         self.updateCompLinks()
 
@@ -699,18 +755,24 @@ class MSFS_Material:
         self.nodeNormalMapSampler = self.getNode(
             MSFS_ShaderNodes.normalMapSampler.value
         )
+        if not self.nodeNormalMapSampler:
+            return
         self.nodeNormalMapSampler.inputs[0].default_value = scale
         self.updateNormalLinks()
 
     def setDetailNormalTex(self, tex):
         self.nodeDetailNormalTex = self.getNode(MSFS_ShaderNodes.detailNormalTex.value)
-        self.nodeDetailNormalTex.image = tex
-        self.updateNormalLinks()
+        if tex is not None:
+            self.nodeDetailNormalTex.image = tex
+            self.nodeDetailNormalTex.image.colorspace_settings.name = "Non-Color"
+            self.updateNormalLinks()
 
     def setNormalTex(self, tex):
         self.nodeNormalTex = self.getNode(MSFS_ShaderNodes.normalTex.value)
-        self.nodeNormalTex.image = tex
-        self.updateNormalLinks()
+        if tex is not None:
+            self.nodeNormalTex.image = tex
+            self.nodeNormalTex.image.colorspace_settings.name = "Non-Color"
+            self.updateNormalLinks()
 
     def updateNormalLinks(self):
         self.nodeNormalTex = self.getNode(MSFS_ShaderNodes.normalTex.value)
