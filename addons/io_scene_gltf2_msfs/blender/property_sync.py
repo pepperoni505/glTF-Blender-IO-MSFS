@@ -25,3 +25,7 @@ def depsgraph_update(scene, depsgraph):
 
 def register():
     bpy.app.handlers.depsgraph_update_post.append(depsgraph_update)
+
+
+def unregister():
+    bpy.app.handlers.depsgraph_update_post.remove(depsgraph_update)
